@@ -1,0 +1,155 @@
+/* Container and Overall Layout */
+.staff-container {
+    padding: 2rem;
+    background-color: #fcfcfd; /* Very light gray background */
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.page-title {
+    color: #101828;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+/* Top Bar Styling */
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.add-user-button {
+    background-color: #7f56d9; /* Modern purple */
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #7f56d9;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.add-user-button:hover {
+    background-color: #6941c6;
+}
+
+/* Table Wrapper for Shadows & Borders */
+.staff-table-wrapper {
+    background: #ffffff;
+    border: 1px solid #eaecf0;
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03), 0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+    overflow: hidden;
+}
+
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+/* Header Styling */
+.staff-table th {
+    background-color: #f9fafb;
+    padding: 12px 24px;
+    color: #667085;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    border-bottom: 1px solid #eaecf0;
+}
+
+/* Cell Styling */
+.staff-table td {
+    padding: 16px 24px;
+    color: #475467;
+    font-size: 0.875rem;
+    border-bottom: 1px solid #eaecf0;
+    vertical-align: middle;
+}
+
+/* Badge/Tag Styles (Matching your image) */
+.staff-id-col, .staff-name-col {
+    color: #101828;
+    font-weight: 500;
+}
+
+/* Action Buttons as Badges */
+.table-button {
+    border: 1px solid;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: 0.2s;
+}
+
+.update-button {
+    color: #344054;
+    border-color: #d0d5dd;
+    background-color: white;
+}
+
+.update-button:hover {
+    background-color: #f9fafb;
+}
+
+.profile-button {
+    color: #6941c6;
+    border-color: #d6bbfb;
+    background-color: #f9f5ff;
+}
+
+.attendance-button {
+    color: #027a48;
+    border-color: #abefc6;
+    background-color: #ecfdf3;
+}
+
+.assignment-button {
+    color: #b42318;
+    border-color: #fecdca;
+    background-color: #fef3f2;
+}
+
+.delete-button {
+    color: #444;
+    border-color: transparent;
+    font-weight: 400;
+}
+
+.delete-button:hover {
+    color: #b42318;
+    text-decoration: underline;
+}
+
+/* States */
+.loading-state, .error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100px;
+    color: #667085;
+}
+
+.spinner-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    animation: spin 1s linear infinite;
+    color: #7f56d9;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

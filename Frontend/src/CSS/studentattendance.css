@@ -1,0 +1,199 @@
+.attendance-container {
+    padding: 30px;
+    background-color: #f8f9fa;
+    min-height: 90vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.attendance-title {
+    color: #007bff;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #e9ecef;
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.date-selector-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.date-selector-bar label {
+    font-weight: 600;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date-selector-bar input[type="date"] {
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.date-selector-bar input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.attendance-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 25px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.attendance-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.attendance-table thead th {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+.attendance-table thead th:first-child { border-top-left-radius: 8px; }
+.attendance-table thead th:last-child { border-top-right-radius: 8px; }
+
+
+.attendance-table tbody td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+
+.attendance-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.attendance-table tbody tr:hover {
+    background-color: #e9f0fe;
+}
+
+.student-name-col {
+    font-weight: 500;
+    color: #333;
+}
+
+.radio-col {
+    text-align: center;
+    position: relative;
+}
+
+.radio-col input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+}
+
+.radio-col:has(input[type="radio"]:checked) {
+    background-color: #e6f7ff;
+    border-radius: 4px;
+}
+
+.check-icon {
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.check-icon.full-day {
+    color: #28a745;
+}
+.check-icon.half-day {
+    color: #ffc107;
+}
+.check-icon.leave-status {
+    color: #dc3545;
+}
+
+.save-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.save-button:hover:not(:disabled) {
+    background-color: #1e7e34;
+}
+
+.save-button:disabled {
+    background-color: #90ee90;
+    cursor: not-allowed;
+}
+
+.attendance-container.loading-state,
+.attendance-container .error-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    font-size: 1.2rem;
+    color: #007bff;
+}
+
+.spinner-icon {
+    font-size: 3rem;
+    animation: spin 1s linear infinite;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.message-box.error-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.attendance-table tbody tr.status-leave {
+    background-color: #fefefe;
+    color: #888;
+}
