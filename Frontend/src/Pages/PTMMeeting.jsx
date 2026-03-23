@@ -1,23 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getPtmSocket } from "../ptmSocket.js";
 
 const STUN_SERVER = "stun:stun.l.google.com:19302";
 
 const PTMMeeting = () => {
-  const { meetingId } = useParams();
+  const { roomId } = useParams();
+  const meetingId = roomId;
+  const location = useLocation();
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fallback logic because useAuth is not defined in the project
-    const isStaff = localStorage.getItem("emtoken");
+    const roleFromNav = location.state?.role;
+    const cookie = typeof document !== "undefined" ? document.cookie : "";
+    const hasStaffToken = cookie.includes("emstoken=") || localStorage.getItem("emstoken");
+    const hasStudentToken = cookie.includes("emtoken=") || localStorage.getItem("emtoken");
+    const isStaff = roleFromNav === "staff" || (!roleFromNav && hasStaffToken && !hasStudentToken);
     const uid = Math.random().toString(36).substring(7);
     setUser({
       id: uid,
       role: isStaff ? "staff" : "student"
     });
-  }, []);
+  }, [location.state]);
 
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
@@ -30,6 +35,10 @@ const PTMMeeting = () => {
 
   useEffect(() => {
     if (!user?.id) return;
+    if (!meetingId) {
+      setStatus("Meeting expired or invalid room");
+      return;
+    }
 
     const socket = getPtmSocket();
     let pendingIceCandidates = [];
@@ -43,7 +52,8 @@ const PTMMeeting = () => {
 
       pc.onicecandidate = (event) => {
         if (event.candidate) {
-          socket.emit("webrtc-ice-candidate", {
+          console.log("[PTM] ICE candidate sent");
+          socket.emit("ptm-ice-candidate", {
             meetingId,
             candidate: event.candidate,
             fromUserId: user.id
@@ -90,23 +100,30 @@ const PTMMeeting = () => {
         });
 
         if (user.role === "staff" || user.role === "admin") {
-          setStatus("Connecting...");
-          const offer = await pcRef.current.createOffer();
-          await pcRef.current.setLocalDescription(offer);
-
-          socket.emit("webrtc-offer", {
-            meetingId,
-            offer,
-            fromUserId: user.id
-          });
+          setStatus("Waiting for student to join...");
         } else {
-          setStatus("Waiting to join...");
+          setStatus("Joining room...");
         }
+        return true;
 
       } catch (err) {
         console.error("Media device error:", err);
         setStatus("Camera/Microphone permission denied");
+        return false;
       }
+    };
+
+    const createAndSendOffer = async () => {
+      if (!pcRef.current || !localStreamRef.current) return;
+      console.log("[PTM] Creating offer");
+      const offer = await pcRef.current.createOffer();
+      await pcRef.current.setLocalDescription(offer);
+      socket.emit("ptm-offer", {
+        meetingId,
+        offer,
+        fromUserId: user.id
+      });
+      setStatus("Connecting...");
     };
 
     const handleOffer = async ({ offer, fromUserId }) => {
@@ -128,12 +145,13 @@ const PTMMeeting = () => {
       const answer = await pcRef.current.createAnswer();
       await pcRef.current.setLocalDescription(answer);
 
-      socket.emit("webrtc-answer", {
+      socket.emit("ptm-answer", {
         meetingId,
         answer,
         fromUserId: user.id
       });
 
+      console.log("[PTM] Answer sent");
       setStatus("Connected");
     };
 
@@ -142,6 +160,7 @@ const PTMMeeting = () => {
 
       await pcRef.current.setRemoteDescription(new RTCSessionDescription(answer));
       await processIceQueue();
+      console.log("[PTM] Answer received");
       setStatus("Connected");
     };
 
@@ -157,28 +176,42 @@ const PTMMeeting = () => {
         } else {
           pendingIceCandidates.push(rtcCandidate);
         }
+        console.log("[PTM] ICE candidate received");
       } catch (err) {
         console.error("ICE error:", err);
       }
     };
 
+    const handleStudentJoined = async ({ userId: joinedUserId }) => {
+      if (joinedUserId === user.id) return;
+      console.log("[PTM] Student joined room");
+      if (user.role === "staff" || user.role === "admin") {
+        await createAndSendOffer();
+      }
+    };
+
     // Clean up before re-registering just in case of strict mode
-    socket.off("webrtc-offer");
-    socket.off("webrtc-answer");
-    socket.off("webrtc-ice-candidate");
+    socket.off("ptm-offer");
+    socket.off("ptm-answer");
+    socket.off("ptm-ice-candidate");
+    socket.off("student-joined");
 
-    socket.on("webrtc-offer", handleOffer);
-    socket.on("webrtc-answer", handleAnswer);
-    socket.on("webrtc-ice-candidate", handleIceCandidate);
+    socket.on("ptm-offer", handleOffer);
+    socket.on("ptm-answer", handleAnswer);
+    socket.on("ptm-ice-candidate", handleIceCandidate);
+    socket.on("student-joined", handleStudentJoined);
 
-    socket.emit("join-meeting-room", { meetingId });
-
-    startLocalStream();
+    startLocalStream().then((ok) => {
+      if (!ok) return;
+      console.log("[PTM] Joining room", meetingId);
+      socket.emit("ptm-join-room", { meetingId, userId: user.id });
+    });
 
     return () => {
-      socket.off("webrtc-offer", handleOffer);
-      socket.off("webrtc-answer", handleAnswer);
-      socket.off("webrtc-ice-candidate", handleIceCandidate);
+      socket.off("ptm-offer", handleOffer);
+      socket.off("ptm-answer", handleAnswer);
+      socket.off("ptm-ice-candidate", handleIceCandidate);
+      socket.off("student-joined", handleStudentJoined);
 
       if (pcRef.current) {
         pcRef.current.close();
@@ -225,7 +258,7 @@ const PTMMeeting = () => {
     try {
       if (user?.id) {
         const socket = getPtmSocket();
-        socket.emit("ptm:leave", { meetingId, userId: user.id });
+        socket.emit("ptm-leave-room", { meetingId, userId: user.id });
       }
     } catch(err) {
       console.error("Error leaving gracefully:", err);

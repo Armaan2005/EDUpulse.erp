@@ -36,6 +36,8 @@ app.use("/",require("./router/reportrouter"));
 app.use("/",require("./router/hostelrouter"));
 app.use("/",require("./router/transportrouter"));
 app.use("/api/meeting", require("./router/meetingrouter"));
+app.use("/", require("./router/faceattendancerouter"));  
+app.use("/", require("./router/aichatrouter"));
 const PORT=process.env.PORT || 7000 ;
 
 const server = http.createServer(app);
