@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+deepface
+opencv-python
+python-multipart
+motor
+pymongo
+geopy
+tf-keras
+python-dotenv

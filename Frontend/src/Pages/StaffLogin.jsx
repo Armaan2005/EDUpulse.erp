@@ -55,7 +55,7 @@ const StaffLogin = () => {
             const response = await axios.post(
                 'http://localhost:7000/stafflogin',
                 formData,
-                { headers: { 'Content-Type': 'application/json' } }
+                { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
             );
 
             if (response.status === 200 && response.data.token) {

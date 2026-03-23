@@ -14,13 +14,12 @@ function initSocket(server) {
   io.on("connection", (socket) => {
     console.log("Socket connected:", socket.id);
 
-    // Join PTM room
     socket.on("ptm-join-room", ({ meetingId, userId }) => {
       socket.join(meetingId);
       console.log(`${userId} joined room ${meetingId}`);
+      socket.to(meetingId).emit("student-joined", { meetingId, userId });
     });
 
-    // Offer
     socket.on("ptm-offer", ({ meetingId, offer, fromUserId }) => {
       socket.to(meetingId).emit("ptm-offer", {
         offer,
@@ -28,7 +27,6 @@ function initSocket(server) {
       });
     });
 
-    // Answer
     socket.on("ptm-answer", ({ meetingId, answer, fromUserId }) => {
       socket.to(meetingId).emit("ptm-answer", {
         answer,
@@ -43,6 +41,11 @@ function initSocket(server) {
       });
     });
 
+    socket.on("ptm-leave-room", ({ meetingId, userId }) => {
+      socket.leave(meetingId);
+      socket.to(meetingId).emit("peer-left", { meetingId, userId });
+    });
+
     socket.on("disconnect", () => {
       console.log("Socket disconnected:", socket.id);
     });
@@ -50,3 +53,4 @@ function initSocket(server) {
 }
 
 module.exports = { initSocket };
+
