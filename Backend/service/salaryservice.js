@@ -178,3 +178,4 @@ exports.staffpaymentview=async(req,res)=>
     return res.status(200).json({success:true,msg:'Payment records for staff fetched successfully',payment:payments});
 }
 
+

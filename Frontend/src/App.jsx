@@ -80,6 +80,7 @@ import Issuedbooks from './Pages/Issuedbooks'
 import Viewpenalty from './Pages/Viewpenalty'
 import Paypenalty from './Pages/Paypenalty'
 import SalaryPayment from './Pages/SalaryPayment'
+import StaffPayment from './Pages/StaffPayment'
 
 const mockUser = Object.freeze({ role: "staff" });
 function App() {
@@ -168,6 +169,7 @@ function App() {
         <Route path='/viewpenalty' element={<Viewpenalty/>}/>
         <Route path='/paypenalty' element={<Paypenalty/>}/>
         <Route path='/payment' element={<SalaryPayment/>}/>
+        <Route path='/staffpayment' element={<StaffPayment/>}/>
 
       </Routes>
       </BrowserRouter>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import cookie from 'js-cookie';
+import { FaMoneyBillWave } from 'react-icons/fa';
 import { 
     Box, Drawer, List, ListItem, ListItemText, AppBar, Toolbar, 
     Typography, IconButton, CssBaseline, Button, Collapse, 
@@ -108,7 +109,7 @@ const StaffDashboard = () => {
     const fetchDashboardData = async () => {
         try {
             setLoading(true);
-            const token = cookie.get('emtoken');
+            const token = cookie.get('emstoken');
             const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
 
             const [studentsRes, noticesRes, submissionsRes] = await Promise.allSettled([
@@ -165,6 +166,7 @@ const StaffDashboard = () => {
         { text: "View Students", icon: <People />, path: '/ViewStudent' },
         { text: "Enter Marks", icon: <Grading />, path: '/marks' },
         { text: "Manage Tests", icon: <Assessment />, path: '/Test' },
+        { text: "My Payments", icon: <FaMoneyBillWave />, path: '/staffpayment' },
         { text: "Staff Profile", icon: <AccountCircle />, path: '/StaffProfile' },
     ];
 
