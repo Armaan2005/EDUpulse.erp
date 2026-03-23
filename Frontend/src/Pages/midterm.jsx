@@ -60,7 +60,7 @@ const MidTermReportCard = () => {
             };
 
             try {
-                const profileResponse = await axios.get('http://localhost:7000/studentprofile', config); 
+                const profileResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studentprofile`, config); 
                 const studentProfile = profileResponse.data.students || profileResponse.data.student; 
 
 
@@ -69,7 +69,7 @@ const MidTermReportCard = () => {
 
 
                 const studentDept = studentProfile.department;
-                const subjectsResponse = await axios.get('http://localhost:7000/viewsubjects', config); 
+                const subjectsResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewsubjects`, config); 
 
 
                 const subjectEntry = subjectsResponse.data.subject.find(sub => sub.branch === studentDept);
@@ -77,11 +77,11 @@ const MidTermReportCard = () => {
                 if (!subjectEntry) 
                     throw new Error("Subjects not found for this department.");
 
-                const ut1Response = await axios.get('http://localhost:7000/getunittest1', config); 
+                const ut1Response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/getunittest1`, config); 
                 const ut1MarksObject = ut1Response.data.marks; 
 
 
-                const midTermResponse = await axios.get('http://localhost:7000/getmidTerm', config); 
+                const midTermResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/getmidTerm`, config); 
                 const midTermMarksObject = midTermResponse.data.data; 
 
 

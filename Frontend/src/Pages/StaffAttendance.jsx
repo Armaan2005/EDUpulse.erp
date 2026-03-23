@@ -15,7 +15,7 @@ const StaffAttendance = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await axios.get("http://localhost:7000/viewstaff", { withCredentials: true });
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewstaff`, { withCredentials: true });
             setStaff(response.data.staff || []);
         } catch (error) {
             console.error("Error fetching staff data:", error);
@@ -76,7 +76,7 @@ const StaffAttendance = () => {
         setError('');
 
         try {
-            const response = await axios.post("http://localhost:7000/Sattendancecheck", { records: dataToSend });
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/Sattendancecheck`, { records: dataToSend });
             alert("Attendance saved successfully!");
         } catch (error) {
             console.error("Error saving attendance:", error.response?.data || error);

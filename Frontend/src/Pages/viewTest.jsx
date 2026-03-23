@@ -38,7 +38,7 @@ const ViewTest = () => {
   const fetchQuizTitles = async () => {
     const token = Cookies.get('emstoken');
     try {
-      const res = await axios.get('http://localhost:7000/viewTitle', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewTitle`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

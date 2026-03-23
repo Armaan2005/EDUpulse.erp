@@ -12,7 +12,7 @@ const Updatestudentpersonal = () => {
 
     const fetchstudentprofile = async () => {
         try {
-            const response = await axios.get(`http://localhost:7000/studentprofile`, {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studentprofile`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -36,7 +36,7 @@ const Updatestudentpersonal = () => {
     {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:7000/updatestudentpersonal`,student,{
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/updatestudentpersonal`,student,{
                 headers:{
                         Authorization:`Bearer ${token}`,
                 },

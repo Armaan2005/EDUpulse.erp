@@ -22,7 +22,7 @@ const RoomAvailabilityComponent = () => {
 
   const fetchRoomDetails = async (authToken) => {
     try {
-      const response = await axios.get("http://localhost:7000/viewroom");
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewroom`);
       if (response.data.success && response.data.room.length > 0) {
         const roomData = response.data.room[0]; 
         setSingleRooms(roomData.singleRooms );
@@ -54,7 +54,7 @@ const RoomAvailabilityComponent = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:7000/updateroom/${roomId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/updateroom/${roomId}`,
         { singleRooms, doubleRooms },
         {
           headers: {

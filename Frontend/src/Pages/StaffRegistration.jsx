@@ -48,7 +48,7 @@ const Registration = () => {
  const fetchDept = async () => {
   setLoading(true);
   try {
-   const response = await axios.get("http://localhost:7000/viewdepartment",{
+   const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewdepartment`,{
     headers: {
         Authorization: `Bearer ${Cookies.get('emtoken')}`,
     },
@@ -79,7 +79,7 @@ const Registration = () => {
    }
 
    const response = await axios.post(
-    "http://localhost:7000/staffregister",
+    `${import.meta.env.VITE_API_BASE_URL}/staffregister`,
     data,
     { headers: { Authorization: `Bearer ${Cookies.get("emtoken")}`, "Content-Type": "multipart/form-data" },
 withCredentials: true }

@@ -60,7 +60,7 @@ const Notices = () => {
   try {
 
    const response = await axios.post(
-    "http://localhost:7000/addnotice",
+    `${import.meta.env.VITE_API_BASE_URL}/addnotice`,
     formData,{
         headers: { Authorization: `Bearer ${Cookies.get('emtoken')}` },
         withCredentials: true

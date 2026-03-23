@@ -19,7 +19,7 @@ const FeePayment = () => {
         }
 
         try {
-            const response = await axios.get('http://localhost:7000/studentprofile2', {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studentprofile2`, {
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials: true,
             });
@@ -74,7 +74,7 @@ const FeePayment = () => {
 
         const token = Cookies.get('token');
         try {
-            const response = await axios.post("http://localhost:7000/payfees", { quarter: selectedQuarter }, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/payfees`, { quarter: selectedQuarter }, {
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials: true,
             });

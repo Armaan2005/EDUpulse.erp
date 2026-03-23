@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave, faChevronLeft, faSpinner, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons';
 import '../CSS/update.css';
 
-const BASE_URL = 'http://localhost:7000';
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
 const UpdateSalary = () => {
   const { salaryId } = useParams();

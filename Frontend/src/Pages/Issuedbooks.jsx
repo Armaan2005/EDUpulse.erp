@@ -8,7 +8,7 @@ const Issuedbooks = () => {
 
     const fetchIssuedBooks = async () => {
         try {
-            const response = await axios.get('http://localhost:7000/currentissued', {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/currentissued`, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('emtoken')}`
                 },

@@ -10,7 +10,7 @@ const ViewStudentTransportDetails = () => {
     const fetchStudentTransportDetails = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/viewstudenttransport"
+          `${import.meta.env.VITE_API_BASE_URL}/viewstudenttransport`
         );
         setStudentData(response.data.data);
         setLoading(false);

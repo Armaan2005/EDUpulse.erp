@@ -15,7 +15,7 @@ const StuAttendance = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await axios.get("http://localhost:7000/viewstudent", { withCredentials: true });
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewstudent`, { withCredentials: true });
             setStudents(response.data.student || []);
         } catch (error) {
             setError("Failed to fetch student list. Check server connection (7000) or URL.");
@@ -75,7 +75,7 @@ const StuAttendance = () => {
         setError('');
 
         try {
-            const response = await axios.post("http://localhost:7000/attendancecheck", { records: dataToSend });
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/attendancecheck`, { records: dataToSend });
             alert("Attendance saved successfully!");
         } catch (error) {
             setError(`Error saving attendance: ${error.message}. Check backend endpoint.`);

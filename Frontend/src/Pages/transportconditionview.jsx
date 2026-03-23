@@ -20,7 +20,7 @@ const BusConditionView = () => {
 
     const fetchBusConditions = async () => {
         try {
-            const response = await axios.get('http://localhost:7000/conditionview',{
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/conditionview`,{
                 headers: {
                     Authorization: `Bearer ${Cookies.get('emtoken')}`
                 },
@@ -37,7 +37,7 @@ const BusConditionView = () => {
 
     const fetchRoutes = async () => {
         try {
-            const response = await axios.get('http://localhost:7000/viewroutes', {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewroutes`, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('emtoken')}`
                 },
@@ -74,7 +74,7 @@ const BusConditionView = () => {
     const handleSaveEdit = async () => {
         setUpdating(true);
         try {
-            await axios.put(`http://localhost:7000/conditionupdate/${editingId}`, editForm, {
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/conditionupdate/${editingId}`, editForm, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('emtoken')}`
                 },

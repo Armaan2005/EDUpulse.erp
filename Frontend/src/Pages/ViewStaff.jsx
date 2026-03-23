@@ -21,7 +21,7 @@ const ViewStaff = () => {
   const fetchStaffData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:7000/viewstaff", { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewstaff`, { withCredentials: true });
       setStaff(response.data.staff || []);
     } catch (err) {
       if (err.response && err.response.status === 401) {
@@ -38,7 +38,7 @@ const ViewStaff = () => {
   const deleteStaff = async (id) => {
     if (!window.confirm("Are you sure you want to delete this staff member?")) return;
     try {
-      await axios.delete(`http://localhost:7000/deletestaff/${id}`, { withCredentials: true });
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/deletestaff/${id}`, { withCredentials: true });
       setStaff(staff.filter((s) => s._id !== id));
     } catch {
       setError("Failed to delete staff.");

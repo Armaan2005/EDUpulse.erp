@@ -28,7 +28,7 @@ const DeleteBooks = () => {
 
       const token = Cookies.get("emtoken");
 
-      const res = await axios.get("http://localhost:7000/viewbook", {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewbook`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
@@ -84,7 +84,7 @@ const DeleteBooks = () => {
 
       const token = Cookies.get("emtoken");
 
-      await axios.delete(`http://localhost:7000/deletebook/${bookId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/deletebook/${bookId}`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
@@ -208,7 +208,7 @@ const DeleteBooks = () => {
                   <div className="relative h-64">
 
                     <img
-                      src={`http://localhost:7000/images/${book.image}`}
+                      src={`${import.meta.env.VITE_API_BASE_URL}/images/${book.image}`}
                       alt={book.bookName}
                       className="w-full h-full object-cover hover:scale-105 transition duration-300"
                     />

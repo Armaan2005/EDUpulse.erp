@@ -11,7 +11,7 @@ import {
   LocationOn, History, ArrowBack, HowToReg
 } from '@mui/icons-material';
 
-const API = 'http://localhost:7000';
+const API = `${import.meta.env.VITE_API_BASE_URL}`;
 const primaryColor = '#0f2a44';
 const secondaryColor = '#0f7fbf';
 

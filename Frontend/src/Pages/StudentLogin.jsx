@@ -53,7 +53,7 @@ const Stulogin = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:7000/admissionlogin',
+                `${import.meta.env.VITE_API_BASE_URL}/admissionlogin`,
                 formData,
                 { headers: { 'Content-Type': 'application/json' } }
             );

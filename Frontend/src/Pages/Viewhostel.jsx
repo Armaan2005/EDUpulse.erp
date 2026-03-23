@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { FaSpinner, FaExclamationTriangle, FaBell } from 'react-icons/fa';
 
 const Viewhostel = () => {
-  const API_BASE_URL = 'http://localhost:7000';
+  const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
   const [studentHostel, setStudentHostel] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

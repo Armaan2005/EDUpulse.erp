@@ -36,7 +36,7 @@ const TransportRegister = () => {
 
   const viewroutes = async () => {
     try {
-      const res = await axios.get('http://localhost:7000/viewroutes2', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewroutes2`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,7 +86,7 @@ const TransportRegister = () => {
 
     try {
       await axios.post(
-        'http://localhost:7000/studenttransportdetails',
+        `${import.meta.env.VITE_API_BASE_URL}/studenttransportdetails`,
         formData,
         {
           headers: {

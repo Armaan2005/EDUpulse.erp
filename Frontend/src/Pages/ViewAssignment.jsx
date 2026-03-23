@@ -32,7 +32,7 @@ const ViewAssignment = () => {
             setIsLoading(true);
             setError("");
             
-            const response = await axios.get("http://localhost:7000/view", {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/view`, {
                 withCredentials: true 
             });
             
@@ -104,7 +104,7 @@ const ViewAssignment = () => {
                                             <td>{formatDate(assignment.SubmissionDate)}</td>
                                             <td>
                                                 <a
-                                                    href={`http://localhost:7000/uploads/${assignment.Assignment}`}
+                                                    href={`${import.meta.env.VITE_API_BASE_URL}/uploads/${assignment.Assignment}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="pdf-link"

@@ -21,7 +21,7 @@ const ViewRoutes = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get('http://localhost:7000/viewroutes', {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewroutes`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("emtoken")}`,
                 },

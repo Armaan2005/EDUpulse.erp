@@ -11,7 +11,7 @@ const ViewDrivers = () => {
 
     const fetchDrivers = async () => {
         try {
-            const response = await axios.get('http://localhost:7000/viewdrivers',{
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewdrivers`,{
                 headers:{
                     Authorization: `Bearer ${Cookies.get("emtoken")}`,
                 },                withCredentials:true,

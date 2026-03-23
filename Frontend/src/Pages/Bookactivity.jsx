@@ -10,7 +10,7 @@ const Bookactivity = () => {
 
     const fetchbookactivity=async()=>{
         try {
-            const response = await axios.get('http://localhost:7000/viewactivity', {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewactivity`, {
                 headers: {
                     Authorization: `Bearer ${Cookies.get('emtoken')}`
                 },

@@ -20,7 +20,7 @@ const SubjectRegistration = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get('http://localhost:7000/viewdepartment', {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewdepartment`, {
         headers: {
           Authorization: `Bearer ${cookie.get('emtoken')}`,
         },
@@ -84,7 +84,7 @@ const SubjectRegistration = () => {
 
     try {
       setLoading(true); 
-      const response = await axios.post('http://localhost:7000/subjectregister', subjectData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/subjectregister`, subjectData, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

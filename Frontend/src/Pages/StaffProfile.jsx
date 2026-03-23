@@ -17,7 +17,7 @@ const StaffProfile = () => {
   const fetchStaffProfile = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:7000/staffprofile', { withCredentials: true });
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/staffprofile`, { withCredentials: true });
       const profileData = response.data?.profile || response.data?.staff || null;
       if (!profileData) {
         setError('No profile data found.');
@@ -64,7 +64,7 @@ const StaffProfile = () => {
               <div className="flex items-center gap-4">
                 {staff.image ? (
                   <img
-                    src={`http://localhost:7000/images/${staff.image}`}
+                    src={`${import.meta.env.VITE_API_BASE_URL}/images/${staff.image}`}
                     alt={staff.name || 'Staff'}
                     className="h-20 w-20 rounded-full object-cover border-2 border-indigo-200"
                   />

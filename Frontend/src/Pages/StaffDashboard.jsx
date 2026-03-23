@@ -20,7 +20,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 const drawerWidth = 260;
-const API_BASE_URL = 'http://localhost:7000';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 const primaryColor = '#0f2a44';
 const lightBg = '#eef1f5';
 const secondaryColor = '#0f7fbf';

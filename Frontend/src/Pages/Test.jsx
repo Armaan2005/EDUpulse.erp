@@ -77,7 +77,7 @@ const Test = () => {
         setIsSaving(true);
         setMessage('');
         try {
-            await axios.post('http://localhost:7000/addquestion', {
+            await axios.post(`${import.meta.env.VITE_API_BASE_URL}/addquestion`, {
                 title: quizTitle,
                 startTime: startTime,
                 endTime: endTime,

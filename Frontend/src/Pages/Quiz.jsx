@@ -26,7 +26,7 @@ const QuizDetails = () => {
     const fetchQuizDetails = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:7000/viewAssessment/${title}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewAssessment/${title}`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -66,7 +66,7 @@ const QuizDetails = () => {
     }
 
     try {
-      await axios.post('http://localhost:7000/AssessmentSubmission', {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/AssessmentSubmission`, {
         quizTitle: quiz.title,
         answers,
       }, {

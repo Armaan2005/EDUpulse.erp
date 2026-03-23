@@ -32,7 +32,7 @@ const StudentProfile = () => {
 
     try {
       const response = await axios.get(
-        "http://localhost:7000/studentprofile",
+        `${import.meta.env.VITE_API_BASE_URL}/studentprofile`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -26,7 +26,7 @@ const ViewAssFeed = () => {
           return;
         }
 
-        const res = await axios.get("http://localhost:7000/viewassfeedback", {
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewassfeedback`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });

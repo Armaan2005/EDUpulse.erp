@@ -8,7 +8,7 @@ const TransportDetail = () => {
   const [error, setError] = useState("");        
   const fetchTransports = async () => {
     try {
-      const response = await axios.get("http://localhost:7000/transportview");
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/transportview`);
       setTransports(response.data.transport);  
       setLoading(false); 
     } catch (err) {
