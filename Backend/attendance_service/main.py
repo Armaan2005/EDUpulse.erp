@@ -22,8 +22,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-COLLEGE_LOCATION = (27.631249, 76.656451)  # ← apna college ka lat/lon daalo
-RADIUS = 200  # meters
+COLLEGE_LOCATION = (27.56974 ,76.61236 )  
+RADIUS = 200  
 
 @app.post("/face/register/")
 async def register_face(student_id: str, name: str, file: UploadFile = File(...)):

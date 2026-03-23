@@ -16,14 +16,12 @@ const QuizDetails = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Get auth token
   useEffect(() => {
     const Token = Cookies.get('token');
     if (Token) setToken(Token);
     else setError('Authentication token missing. Please log in.');
   }, []);
 
-  // Fetch quiz data
   useEffect(() => {
     const fetchQuizDetails = async () => {
       setLoading(true);
