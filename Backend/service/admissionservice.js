@@ -5,15 +5,12 @@ let jwt = require("jsonwebtoken");
 let bct = require("bcryptjs");
 let crypto=require("crypto");
 const nodemailer = require("nodemailer");
-const MAIL_USER = process.env.MAIL_USER;
-const MAIL_PASS = process.env.MAIL_PASS;
-const MAIL_FROM = process.env.MAIL_FROM;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: MAIL_USER,
-    pass: MAIL_PASS
+    user: "edupulse.erp@gmail.com",
+    pass: "kxvx nobm kiws txml",
   }
 });
 
@@ -54,7 +51,7 @@ exports.admission = async (req, res) => {
       await record2.save();
       await record.save();
       const mail={
-        from: MAIL_FROM,
+        from: "edupulse.erp@gmail.com",
         to: email,
         subject: "Welcome to EduPulse - Your Student Account Details",
         text: `Hello ${name},\n\nWelcome to EduPulse! Your account has been created successfully. Here are your login credentials:\n\nEmail: ${email}\nPassword: ${password}\n\nPlease log in to your account and change your password as soon as possible.\n\nBest regards,\nEduPulse Team`
@@ -71,7 +68,7 @@ exports.admission = async (req, res) => {
       await record.save();
 
        const mail={
-        from: MAIL_FROM,
+        from: "edupulse.erp@gmail.com",
         to: email,
         subject: "Welcome to EduPulse - Your Student Account Details",
         text: `Hello ${name},\n\nWelcome to EduPulse! Your account has been created successfully. Here are your login credentials:\n\nEmail: ${email}\nPassword: ${password}\n\nPlease log in to your account and change your password as soon as possible.\n\nBest regards,\nEduPulse Team`
