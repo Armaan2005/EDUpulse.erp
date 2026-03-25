@@ -24,7 +24,7 @@ const ViewStudent = () => {
   const fetchStudentData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:7000/viewstudent", {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewstudent`, {
         withCredentials: true
       });
 
@@ -45,7 +45,7 @@ const ViewStudent = () => {
     if (!window.confirm("Are you sure you want to delete this student?")) return;
 
     try {
-      await axios.delete(`http://localhost:7000/deletestudent/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/deletestudent/${id}`, {
         withCredentials: true
       });
 

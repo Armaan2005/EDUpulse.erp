@@ -1,4 +1,5 @@
 let rec=require("../models/attendance");
+let staffRec = require("../models/staff");
 
 exports.addattendance=async(req,res)=>
 {
@@ -66,4 +67,52 @@ exports.attendancecheck=async(req,res)=>
     console.error("Error saving attendance:", error);
     return res.status(500).json({ message: "Error saving attendance records", error });
   }
+};
+
+exports.viewAttendanceByDate = async (req, res) => {
+  try {
+    const { date } = req.query;
+    if (!date) {
+      return res.status(400).json({ success: false, msg: "date is required (YYYY-MM-DD)" });
+    }
+
+    const [staffList, attendanceList] = await Promise.all([
+      staffRec.find({}, { _id: 0, id: 1, name: 1 }),
+      rec.find({ date }, { _id: 0, id: 1, status: 1, date: 1 }),
+    ]);
+
+    const byId = new Map(attendanceList.map(r => [Number(r.id), r]));
+
+    const rows = (staffList || []).map(s => {
+      const id = Number(s.id);
+      const found = byId.get(id);
+      return {
+        id,
+        name: s.name,
+        status: found?.status || "Leave",
+        marked: Boolean(found),
+      };
+    });
+
+    const summary = rows.reduce(
+      (acc, r) => {
+        acc.total += 1;
+        if (r.status === "Full") acc.present += 1;
+        else if (r.status === "Half") acc.half += 1;
+        else acc.leave += 1;
+        return acc;
+      },
+      { total: 0, present: 0, half: 0, leave: 0 }
+    );
+
+    return res.status(200).json({
+      success: true,
+      date,
+      summary,
+      attendance: rows,
+    });
+  } catch (error) {
+    console.error("Error fetching staff attendance by date:", error);
+    return res.status(500).json({ success: false, msg: "Failed to fetch attendance." });
   }
+};

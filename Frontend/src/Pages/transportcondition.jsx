@@ -43,7 +43,7 @@ const BusConditionUpdate = () => {
 
  const fetchRoutes = async () => {
   try {
-   const response = await axios.get("http://localhost:7000/viewroutes", {
+   const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewroutes`, {
     headers: { Authorization: `Bearer ${token}` },
     withCredentials: true
    });
@@ -76,7 +76,7 @@ const BusConditionUpdate = () => {
   try {
 
    await axios.post(
-    "http://localhost:7000/conditionupdate",
+    `${import.meta.env.VITE_API_BASE_URL}/conditionupdate`,
     {
      busNo,
      size,

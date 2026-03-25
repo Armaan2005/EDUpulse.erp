@@ -129,7 +129,7 @@ const HostelRegistrationForm = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:7000/studentregister',
+                `${import.meta.env.VITE_API_BASE_URL}/studentregister`,
                 finalData,
                 {
                     headers: {

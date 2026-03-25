@@ -42,7 +42,7 @@ const ViewNoticess = () => {
 
     try {
 
-      const response = await axios.get("http://localhost:7000/viewnotice");
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewnotice`);
 
       const noticesWithTypes = response.data.notices.map((notice) => {
 
@@ -93,7 +93,7 @@ const ViewNoticess = () => {
 
     try {
 
-      await axios.delete(`http://localhost:7000/deletenotice/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/deletenotice/${id}`);
 
       setNotices(notices.filter((n) => n._id !== id));
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const studentAuth = require("../middleware/student");
+const studentAuth = require("../middleware/admission");
 const staffAuth = require("../middleware/staff");
 const { studentAIChat, staffAIChat } = require("../controller/aichatcontroller");
 

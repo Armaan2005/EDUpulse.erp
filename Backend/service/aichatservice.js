@@ -9,8 +9,8 @@ const bookModel = require("../models/Book");
 const hostelModel = require("../models/hosteldetail/studentschema");
 const penaltyModel = require("../models/penalty");
 const marksModel = require("../models/marks");
+const quizModel = require("../models/test");
 
-// ✅ Sahi model — 2.0-flash stable hai
 const GEMINI_API = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
 
 // ── Student Functions ──────────────────────────────────────────
@@ -168,13 +168,58 @@ const staffFunctions = {
   },
 
   add_notice: async (staff, { title, content, type, eventDate }) => {
-    if (!title || !content) return "Notice ka title aur content batao.";
+    if (!title) return "Notice ka title batao.";
     await noticeModel.create({
-      title, content, type: type || "General",
+      title,
+      content: content || title,
+      type: type || "General",
       issueDate: new Date(),
       eventDate: eventDate ? new Date(eventDate) : null,
     });
     return `✅ Notice "${title}" add ho gayi!`;
+  },
+
+  add_test: async (staff, { title, startTime, endTime, questions }) => {
+    const testTitle = (title || "").trim() || `AI Test ${new Date().toISOString().slice(0, 10)}`;
+    const start = startTime ? new Date(startTime) : new Date(Date.now() + 10 * 60 * 1000);
+    const end = endTime ? new Date(endTime) : new Date(start.getTime() + 24 * 60 * 60 * 1000);
+
+    const safeQuestions = Array.isArray(questions) && questions.length
+      ? questions
+      : [
+          {
+            questionText: `What is the main topic of "${testTitle}"?`,
+            questionId: Date.now(),
+            options: { A: "Introduction", B: "Advanced only", C: "Not related", D: "None" },
+            correctAnswer: "A",
+            points: 1,
+          },
+          {
+            questionText: "Which option is generally correct in objective tests?",
+            questionId: Date.now() + 1,
+            options: { A: "A", B: "B", C: "C", D: "Depends on question" },
+            correctAnswer: "D",
+            points: 1,
+          },
+          {
+            questionText: "Assessment submission should be done before?",
+            questionId: Date.now() + 2,
+            options: { A: "Start time", B: "End time", C: "Any time", D: "Never" },
+            correctAnswer: "B",
+            points: 1,
+          },
+        ];
+
+    let quiz = await quizModel.findOne({ title: testTitle });
+    if (!quiz) {
+      quiz = new quizModel({ title: testTitle, startTime: start, endTime: end, questions: safeQuestions });
+    } else {
+      quiz.startTime = start;
+      quiz.endTime = end;
+      quiz.questions = [...(quiz.questions || []), ...safeQuestions];
+    }
+    await quiz.save();
+    return `✅ Test "${testTitle}" create ho gaya. Students ko quiz list me dikhega.`;
   },
 
   delete_notice: async (staff, { noticeId, title }) => {
@@ -227,7 +272,7 @@ async function callGemini(systemPrompt, history, userMessage, apiKey) {
 // ── Intent Detector ────────────────────────────────────────────
 async function detectIntent(message, apiKey, role) {
   const studentActions = `get_notices, get_assignments, get_attendance, get_fees, get_library_books, get_hostel, get_marks, get_penalties, submit_assignment(assignmentId,note)`;
-  const staffActions = `get_all_students, get_today_attendance, mark_student_attendance(studentName,studentId,date,status), get_assignments, add_assignment(title,description,submissionDate), delete_assignment(assignmentId,title), get_notices, add_notice(title,content,type,eventDate), delete_notice(noticeId,title), get_submissions`;
+  const staffActions = `get_all_students, get_today_attendance, mark_student_attendance(studentName,studentId,date,status), get_assignments, add_assignment(title,description,submissionDate), delete_assignment(assignmentId,title), get_notices, add_notice(title,content,type,eventDate), delete_notice(noticeId,title), get_submissions, add_test(title,startTime,endTime)`;
 
   const prompt = `Analyze user message and return ONLY a JSON:
 {"action": "function_name or null", "params": {}}
@@ -256,6 +301,34 @@ Return ONLY valid JSON.`;
     console.error("[Intent Error]", e.message);
     return { action: null, params: {} };
   }
+}
+
+function inferStaffIntentFallback(message) {
+  const m = (message || "").toLowerCase();
+  const hasCreateWord = /(add|create|make|bna|banao|banado|post|publish)/i.test(m);
+  const compactTitle = (message || "").replace(/\s+/g, " ").trim().slice(0, 80);
+
+  if (hasCreateWord && /(notice|सूचना|notis)/i.test(m)) {
+    return {
+      action: "add_notice",
+      params: {
+        title: compactTitle || "General Notice",
+        content: message || "Notice posted by AI assistant",
+        type: "General",
+      },
+    };
+  }
+
+  if (hasCreateWord && /(test|quiz|assessment)/i.test(m)) {
+    return {
+      action: "add_test",
+      params: {
+        title: compactTitle || `AI Test ${new Date().toISOString().slice(0, 10)}`,
+      },
+    };
+  }
+
+  return { action: null, params: {} };
 }
 
 // ── Student Chat ───────────────────────────────────────────────
@@ -311,9 +384,14 @@ exports.staffAIChat = async (req, res) => {
     const intent = await detectIntent(message, apiKey, 'staff');
     console.log("[AI] Intent:", intent);
 
+    let resolvedIntent = intent;
+    if (!resolvedIntent.action || !staffFunctions[resolvedIntent.action]) {
+      resolvedIntent = inferStaffIntentFallback(message);
+    }
+
     let erpData = null;
-    if (intent.action && staffFunctions[intent.action]) {
-      erpData = await staffFunctions[intent.action](staff, intent.params || {});
+    if (resolvedIntent.action && staffFunctions[resolvedIntent.action]) {
+      erpData = await staffFunctions[resolvedIntent.action](staff, resolvedIntent.params || {});
     }
 
     const systemPrompt = `You are EduPulse AI Assistant for staff ${staff.name} (Dept: ${staff.department || "N/A"}).

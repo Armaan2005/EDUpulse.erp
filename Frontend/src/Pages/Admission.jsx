@@ -4,7 +4,7 @@ import '../CSS/Admission.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const BASE_URL = 'http://localhost:7000';
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 const COMMON_BASE_FEE = 150000;
 
 const FEE_STRUCTURE = {
@@ -104,7 +104,7 @@ const Admission = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:7000/admission', {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/admission`, {
         ...formData,
       }, { headers: { Authorization: `Bearer ${Cookies.get('emtoken')}` }, withCredentials: true
       });

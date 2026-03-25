@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { FaSpinner, FaExclamationTriangle, FaBell } from 'react-icons/fa';
 
 const Viewhostel = () => {
-  const API_BASE_URL = 'http://localhost:7000';
+  const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
   const [studentHostel, setStudentHostel] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -49,7 +49,7 @@ const Viewhostel = () => {
     }
   };
 
-  const sendReminder = async (email, amount) => {
+  const sendReminder = async (email, amount, studentId) => {
     setReminderSending(studentId);
     try {
       const token = Cookies.get('emtoken');
@@ -178,12 +178,12 @@ const Viewhostel = () => {
                       <td className="px-6 py-4 text-center">
                         {isUnpaid && (
                           <button
-                            onClick={() => sendReminder(item.email, item.totalCharge)}
-                            disabled={reminderSending === item.email}
+                            onClick={() => sendReminder(item.email, balance, item.studentid)}
+                            disabled={reminderSending === item.studentid}
                             className="inline-flex items-center gap-1 px-3 py-1.5 bg-orange-500 text-white text-xs font-semibold rounded hover:bg-orange-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             <FaBell size={12} />
-                            {reminderSending === item.email ? 'Sending...' : 'Send'}
+                            {reminderSending === item.studentid ? 'Sending...' : 'Send'}
                           </button>
                         )}
                       </td>

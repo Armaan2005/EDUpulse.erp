@@ -62,7 +62,7 @@ const Assignment = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:7000/create", 
+                `${import.meta.env.VITE_API_BASE_URL}/create`, 
                 formData,
                 config 
             );

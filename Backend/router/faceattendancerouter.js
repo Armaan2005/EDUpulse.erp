@@ -1,6 +1,6 @@
 let express = require("express");
 let router = express.Router();
-let auth = require("../middleware/student");
+let auth = require("../middleware/admission");
 const multer = require("multer");
 
 let upload = multer({ storage: multer.memoryStorage() });

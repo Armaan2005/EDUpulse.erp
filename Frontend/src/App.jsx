@@ -80,7 +80,12 @@ import Issuedbooks from './Pages/Issuedbooks'
 import Viewpenalty from './Pages/Viewpenalty'
 import Paypenalty from './Pages/Paypenalty'
 import SalaryPayment from './Pages/SalaryPayment'
+
+import StaffPayment from './Pages/StaffPayment'
+
 import FaceAttendance from './Pages/FaceAttendance'
+import ViewStaffAttendance from './Pages/ViewStaffAttendance'
+import ViewStuAttendance from './Pages/ViewStuAttendance'
 
 const mockUser = Object.freeze({ role: "staff" });
 function App() {
@@ -169,13 +174,18 @@ function App() {
         <Route path='/viewpenalty' element={<Viewpenalty/>}/>
         <Route path='/paypenalty' element={<Paypenalty/>}/>
         <Route path='/payment' element={<SalaryPayment/>}/>
-        {/* PTM ROUTES (kept together) */}
+
+        <Route path='/staffpayment' element={<StaffPayment/>}/>
+
         <Route
           path="/ptm"
           element={<JoinMeeting role={mockUser.role} />}
         />
         <Route path="/ptm/:roomId" element={<PTMMeeting />} />
         <Route path='/face-attendance' element={<StudentPri><FaceAttendance/></StudentPri>}/>
+        <Route path='/ViewStaffAttendance' element={<ViewStaffAttendance/>}/>
+        <Route path='/ViewStuAttendance' element={<ViewStuAttendance/>}/>
+
 
       </Routes>
       </BrowserRouter>

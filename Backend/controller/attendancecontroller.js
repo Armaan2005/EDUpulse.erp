@@ -1,4 +1,4 @@
-const { addattendance, viewattendance,attendancecheck } = require("../service/attendanceservice");
+const { addattendance, viewattendance, attendancecheck, viewAttendanceByDate } = require("../service/attendanceservice");
 
 exports.addattendance=async(req,res)=>
 {
@@ -12,4 +12,8 @@ exports.viewattendance=async(req,res)=>
 
 exports.attendancecheck=async(req,res)=>{
     await attendancecheck(req,res);
+}
+
+exports.viewAttendanceByDate=async(req,res)=>{
+    await viewAttendanceByDate(req,res);
 }

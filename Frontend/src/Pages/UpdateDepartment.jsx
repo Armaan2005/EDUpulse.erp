@@ -14,7 +14,7 @@ const UpdateDepartment = () => {
   const fetchDepartmentData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:7000/Dviewbyid/${departId}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/Dviewbyid/${departId}`);
       alert(response.data.department)
       setDepartment({
 
@@ -40,7 +40,7 @@ const UpdateDepartment = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:7000/updatedepartment/${departId}`,
+        `${import.meta.env.VITE_API_BASE_URL}/updatedepartment/${departId}`,
         department
       );
       if (response.status === 200) {

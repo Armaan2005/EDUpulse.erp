@@ -23,7 +23,7 @@ const Updatestaffpersonal = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get('http://localhost:7000/staffprofile', {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/staffprofile`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         withCredentials: true,
       });
@@ -68,7 +68,7 @@ const Updatestaffpersonal = () => {
         formData.append('image', staff.image);
       }
 
-      await axios.put('http://localhost:7000/staffupdate', formData, {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/staffupdate`, formData, {
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
           'Content-Type': 'multipart/form-data',

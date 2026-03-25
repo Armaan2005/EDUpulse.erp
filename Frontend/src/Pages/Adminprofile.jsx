@@ -19,7 +19,7 @@ const AdminProfile = () => {
 
         try {
             setLoading(true);
-            const response = await axios.get('http://localhost:7000/adminprofile', {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/adminprofile`, {
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials: true,
             });

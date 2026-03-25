@@ -3,12 +3,15 @@ let rec2=require('../models/hosteldetail/studentschema');
 let rec3=require('../models/hosteldetail/fees');
 let rec4=require('../models/admission');
 const nodemailer = require('nodemailer');
+const MAIL_USER = process.env.MAIL_USER;
+const MAIL_PASS = process.env.MAIL_PASS;
+const MAIL_FROM = process.env.MAIL_FROM;
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "edupulse.erp@gmail.com",
-    pass: "hupa ygfd bswi kgez"
+    user: MAIL_USER,
+    pass: MAIL_PASS
   }
 });
 
@@ -182,7 +185,7 @@ exports.sendfeesreminder = async (req, res) =>
      console.log("Email:", email);
     console.log("Amount:", amount);
     const mail={
-      from:"edupulse.erp@gmail.com",
+      from: MAIL_FROM,
       to: email,
       subject: "Hostel Fee Payment Reminder",
       text: `Dear Student, this is a reminder that your hostel fee payment of ₹${amount} is pending. Please make the payment at your earliest convenience to avoid any late fees or else your services may be affected. Thank you!

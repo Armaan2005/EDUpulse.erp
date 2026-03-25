@@ -9,7 +9,7 @@ import {
 } from 'react-icons/fa';
 
 const ViewTest = () => {
-  const [quizTitles, setQuizTitles] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -36,13 +36,13 @@ const ViewTest = () => {
   };
 
   const fetchQuizTitles = async () => {
-    const token = Cookies.get('token');
+    const token = Cookies.get('emstoken');
     try {
-      const res = await axios.get('http://localhost:7000/viewTitle', {
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewTitle`, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
-      setQuizTitles(res.data.titles || []);
+      setQuizzes(res.data.titles || []);
     } catch {
       setError('Failed to load quizzes');
     } finally {
@@ -86,19 +86,23 @@ const ViewTest = () => {
         </div>
 
         <span className="bg-white shadow px-4 py-1 rounded-full text-sm text-gray-700">
-          {quizTitles.length} Tests
+          {quizzes.length} Tests
         </span>
       </div>
 
-      {quizTitles.length === 0 ? (
+      {quizzes.length === 0 ? (
         <div className="text-center mt-20">
           <FaStar className="text-6xl mx-auto text-yellow-400 animate-pulse mb-4" />
           <p className="text-lg text-gray-600">No quizzes available</p>
         </div>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {quizTitles.map((title, index) => {
+          {quizzes.map((quiz, index) => {
             const { gradient, icon } = getQuizMetadata(index);
+            const now = new Date();
+            const start = new Date(quiz.startTime);
+            const end = new Date(quiz.endTime);
+            const canStart = now >= start && now <= end;
 
             return (
               <div
@@ -114,24 +118,29 @@ const ViewTest = () => {
                     </div>
 
                     <h3 className="text-xl font-semibold mb-2 text-gray-800 group-hover:text-gray-700 transition">
-                      {title}
+                      {quiz.title}
                     </h3>
 
+                    <p className="text-sm text-gray-600 mb-2">
+                      Start: {new Date(quiz.startTime).toLocaleString()}
+                    </p>
                     <p className="text-sm text-gray-600">
-                      Attempt quiz or view results anytime.
+                      End: {new Date(quiz.endTime).toLocaleString()}
                     </p>
                   </div>
 
                   <div className="mt-6 flex gap-3">
-                    <button
-                      onClick={() => handleQuizClick(title)}
-                      className="flex-1 bg-blue-500 hover:bg-blue-600 py-2 rounded-lg flex items-center justify-center gap-2 text-white shadow-md transition"
-                    >
-                      Start <FaChevronRight />
-                    </button>
+                    {canStart && (
+                      <button
+                        onClick={() => handleQuizClick(quiz.title)}
+                        className="flex-1 py-2 rounded-lg flex items-center justify-center gap-2 text-white shadow-md transition bg-blue-500 hover:bg-blue-600"
+                      >
+                        Start <FaChevronRight />
+                      </button>
+                    )}
 
                     <button
-                      onClick={() => handleResultClick(title)}
+                      onClick={() => handleResultClick(quiz.title)}
                       className="flex-1 bg-gray-200 hover:bg-gray-300 py-2 rounded-lg flex items-center justify-center gap-2 text-gray-800 transition"
                     >
                       <FaChartBar /> Result

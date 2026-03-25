@@ -9,14 +9,13 @@ async function auth(req, res, next) {
       const data = jwt.verify(token, "aabb");
       console.log("data in auth middleware:", data);
       let adm = await stumodel.findOne({ email: data.token });
+      console.log("student found in DB:", adm ? adm.email : "NOT FOUND");
       
-      if (!adm) return res.status(403).json({ msg: "student not found" });
-      else{
+      if (!adm) return res.status(403).json({ msg: "student not found in DB" });
       req.adm = adm;
       next();
-      }
     } else {
-      console.log("Please Login First");
+      return res.status(401).json({ msg: "Please Login First" });
     }
   } catch (err) {
     console.log(err);

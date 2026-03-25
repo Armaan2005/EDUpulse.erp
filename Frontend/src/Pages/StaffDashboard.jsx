@@ -2,25 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import cookie from 'js-cookie';
+import { FaMoneyBillWave } from 'react-icons/fa';
 import AIChatBox from '../Components/AIChatBox';
-import {
-    Box, Drawer, List, ListItem, ListItemText, AppBar, Toolbar,
-    Typography, IconButton, CssBaseline, Button, Collapse,
-    ListItemIcon, Paper, Grid, Avatar, Divider, CircularProgress,
-    Card, CardContent
+import { 
+    Box, Drawer, List, ListItem, ListItemText, AppBar, Toolbar, 
+    Typography, IconButton, CssBaseline, Button, Collapse, 
+    ListItemIcon, Paper, Grid, Avatar, Divider, CircularProgress, Card, CardContent 
 } from '@mui/material';
 import {
     Menu as MenuIcon, People, Assignment, Notifications,
     ExpandLess, ExpandMore, AccountCircle, Home,
     Grading, Assessment, AccessTime, Campaign, Logout,
-    EventNote, AccessAlarm, AutoAwesome
+    EventNote, AccessAlarm, AutoAwesome 
 } from '@mui/icons-material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 
 const drawerWidth = 260;
-const API_BASE_URL = 'http://localhost:7000';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 const primaryColor = '#0f2a44';
 const lightBg = '#eef1f5';
 const secondaryColor = '#0f7fbf';
@@ -74,7 +74,7 @@ const StaffDashboard = () => {
     const fetchDashboardData = async () => {
         try {
             setLoading(true);
-            const token = cookie.get('emtoken');
+            const token = cookie.get('emstoken');
             const authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
 
             const [studentsRes, noticesRes, submissionsRes] = await Promise.allSettled([
@@ -118,6 +118,7 @@ const StaffDashboard = () => {
         { text: "View Students", icon: <People />, path: '/ViewStudent' },
         { text: "Enter Marks", icon: <Grading />, path: '/marks' },
         { text: "Manage Tests", icon: <Assessment />, path: '/Test' },
+        { text: "My Payments", icon: <FaMoneyBillWave />, path: '/staffpayment' },
         { text: "Staff Profile", icon: <AccountCircle />, path: '/StaffProfile' },
     ];
 

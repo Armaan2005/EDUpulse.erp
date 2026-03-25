@@ -6,7 +6,7 @@ import '../CSS/studentattendance.css';
 const StuAttendance = () => {
     const [students, setStudents] = useState([]);
     const [records, setRecords] = useState([]);
-    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [isSaving, setIsSaving] = useState(false);
@@ -15,7 +15,7 @@ const StuAttendance = () => {
         setLoading(true);
         setError('');
         try {
-            const response = await axios.get("http://localhost:7000/viewstudent", { withCredentials: true });
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewstudent`, { withCredentials: true });
             setStudents(response.data.student || []);
         } catch (error) {
             setError("Failed to fetch student list. Check server connection (7000) or URL.");
@@ -39,7 +39,31 @@ const StuAttendance = () => {
             }));
             setRecords(initialRecords);
         }
-    }, [students]);
+    }, [students, selectedDate]);
+
+    // When a date is selected, prefill statuses from backend (manual + face-attendance merged)
+    useEffect(() => {
+        const loadByDate = async () => {
+            if (!selectedDate) return;
+            setError('');
+            try {
+                const res = await axios.get(
+                    `${import.meta.env.VITE_API_BASE_URL}/viewStuAttendanceByDate?date=${selectedDate}`,
+                    { withCredentials: true }
+                );
+                const rows = res.data?.attendance;
+                if (Array.isArray(rows)) {
+                    setRecords(prev => prev.map(r => {
+                        const found = rows.find(x => Number(x.id) === Number(r.id));
+                        return found ? { ...r, status: found.status, date: selectedDate } : r;
+                    }));
+                }
+            } catch (err) {
+                setError(err.response?.data?.msg || 'Could not load existing attendance for this date.');
+            }
+        };
+        loadByDate();
+    }, [selectedDate, students.length]);
 
     const handleDateChange = (e) => {
         const date = e.target.value;
@@ -75,7 +99,7 @@ const StuAttendance = () => {
         setError('');
 
         try {
-            const response = await axios.post("http://localhost:7000/attendancecheck", { records: dataToSend });
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/attendancecheck`, { records: dataToSend });
             alert("Attendance saved successfully!");
         } catch (error) {
             setError(`Error saving attendance: ${error.message}. Check backend endpoint.`);

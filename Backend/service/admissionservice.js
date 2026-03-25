@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: "edupulse.erp@gmail.com",
-    pass: "hupa ygfd bswi kgez"
+    pass: "kxvx nobm kiws txml",
   }
 });
 

@@ -51,7 +51,7 @@ const AddBook = () => {
    }
 
    const response = await axios.post(
-    "http://localhost:7000/addbook",
+    `${import.meta.env.VITE_API_BASE_URL}/addbook`,
     data,
     { headers: { Authorization: `Bearer ${Cookies.get('emtoken')}`, "Content-Type": "multipart/form-data"}, withCredentials: true }
    );

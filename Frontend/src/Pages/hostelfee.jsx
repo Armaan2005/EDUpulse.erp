@@ -9,7 +9,7 @@ import {
 
 import '../CSS/hostelfee.css';
 
-const BASE_URL = 'http://localhost:7000';
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 const STUDENT_DETAILS_URL = `${BASE_URL}/viewstudenthostel`;
 const VIEW_FEES_URL = `${BASE_URL}/viewfees`; 
 const MAKE_PAYMENT_URL = `${BASE_URL}/feespayment`; 

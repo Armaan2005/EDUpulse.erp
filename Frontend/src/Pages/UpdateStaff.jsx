@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserEdit, faSave, faChevronLeft, faSpinner, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import '../CSS/update.css'; 
 
-const BASE_URL = 'http://localhost:7000';
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
 const UpdateStaff = () => {
   const { staffId } = useParams();

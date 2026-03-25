@@ -5,7 +5,7 @@ const PYTHON_URL = process.env.PYTHON_ATTENDANCE_URL || "http://localhost:8000";
 
 exports.registerFace = async (req, res) => {
   try {
-    const student = req.student; // admission model se aata hai
+    const student = req.adm; // admission model se aata hai
     if (!req.file) return res.status(400).json({ success: false, msg: "Please capture your face image." });
 
     const fd = new FormData();
@@ -34,7 +34,7 @@ exports.registerFace = async (req, res) => {
 
 exports.markFaceAttendance = async (req, res) => {
   try {
-    const student = req.student; // admission model se aata hai
+    const student = req.adm; // admission model se aata hai
     if (!req.file) return res.status(400).json({ success: false, msg: "Please capture your face image." });
     
     const { lat, lon } = req.body;
@@ -65,7 +65,7 @@ exports.markFaceAttendance = async (req, res) => {
 
 exports.getFaceAttendanceHistory = async (req, res) => {
   try {
-    const student = req.student; // admission model se aata hai
+    const student = req.adm; // admission model se aata hai
     const response = await fetch(`${PYTHON_URL}/face/history/?student_id=${String(student._id)}`);
     const data = await response.json();
     if (!response.ok) return res.status(response.status).json({ success: false, msg: data.detail || "Could not fetch history." });

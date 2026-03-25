@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faEnvelope, faPhone, faMapMarkerAlt, faBuilding, faEdit, faChevronLeft, faSpinner, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import '../CSS/ViewStaffProfile.css'; 
 
-const BASE_URL = 'http://localhost:7000';
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
 const ViewStaffProfile = () => {
     const { staffId } = useParams();

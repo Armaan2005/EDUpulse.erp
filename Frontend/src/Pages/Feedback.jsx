@@ -62,7 +62,7 @@ const Feedback = () => {
     try {
 
       const response = await axios.post(
-        "http://localhost:7000/addfeedback",
+        `${import.meta.env.VITE_API_BASE_URL}/addfeedback`,
         feedbackData,
         {
           headers: {

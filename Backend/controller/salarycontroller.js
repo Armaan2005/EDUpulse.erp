@@ -1,4 +1,4 @@
-const { salaryregister,salaryview,salaryupdate,salarydelete,salarypayment } = require("../service/salaryservice");
+const { salaryregister,salaryview,salaryupdate,salarydelete,salarypayment, paymentview, staffpaymentview } = require("../service/salaryservice");
 const { viewbyid } = require("../service/salaryservice");
 
 exports.salaryregister=async(req,res)=>
@@ -24,4 +24,12 @@ exports.viewbyid=async(req,res)=>
 exports.salarypayment=async(req,res)=>
 {
     await salarypayment(req,res);
+}
+exports.paymentview=async(req,res)=>
+{
+    await paymentview(req,res);
+}
+exports.staffpaymentview=async(req,res)=>
+{
+    await staffpaymentview(req,res);
 }

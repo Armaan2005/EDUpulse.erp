@@ -53,7 +53,7 @@ const AdminLogin = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:7000/adminlogin', 
+                `${import.meta.env.VITE_API_BASE_URL}/adminlogin`, 
                 formData,
                 { headers: { 'Content-Type': 'application/json' }}
             );

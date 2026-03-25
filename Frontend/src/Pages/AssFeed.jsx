@@ -26,7 +26,7 @@ const AssignmentFeedback = () => {
         setError('');
         try {
             const response = await axios.get(
-                `http://localhost:7000/findSubmissionById/${submissionId}`,
+                `${import.meta.env.VITE_API_BASE_URL}/findSubmissionById/${submissionId}`,
                 { withCredentials: true }
             );
 
@@ -77,7 +77,7 @@ const AssignmentFeedback = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:7000/assfeedback',
+                `${import.meta.env.VITE_API_BASE_URL}/assfeedback`,
                 feedbackData,
                 {
                     headers: { 'Content-Type': 'application/json' },

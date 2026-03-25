@@ -41,7 +41,7 @@ const ViewNotices = () => {
 
     try {
 
-      const response = await axios.get("http://localhost:7000/viewnotice");
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewnotice`);
 
       const noticesWithTypes = response.data.notices.map((notice) => {
 

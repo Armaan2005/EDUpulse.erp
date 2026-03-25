@@ -13,7 +13,7 @@ import {
   FaBook
 } from 'react-icons/fa';
 
-const API_BASE_URL = 'http://localhost:7000';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 const OVERDUE_DAYS = 2;
 
 const calculateDaysIssued = (date) => {

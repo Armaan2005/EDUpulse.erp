@@ -53,9 +53,9 @@ const StaffLogin = () => {
 
         try {
             const response = await axios.post(
-                'http://localhost:7000/stafflogin',
+                `${import.meta.env.VITE_API_BASE_URL}/stafflogin`,
                 formData,
-                { headers: { 'Content-Type': 'application/json' } }
+                { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
             );
 
             if (response.status === 200 && response.data.token) {

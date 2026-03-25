@@ -16,7 +16,7 @@ const ViewResult = () => {
       setLoading(true);
 
       try {
-        const response = await axios.get(`http://localhost:7000/ViewResult/${title}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/ViewResult/${title}`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true, 
         });

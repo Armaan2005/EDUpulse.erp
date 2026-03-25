@@ -27,7 +27,7 @@ const contentBg = '#f2f2f8';
 const purpleHover = '#e0e0f0';
 const darkPurple = '#594473';
 
-const API_BASE_URL = 'http://localhost:7000'; 
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`; 
 const feedbackBucketsDefault = [
     { rating: 'Excellent (8-10)', count: 0 },
     { rating: 'Good (5-7)', count: 0 },

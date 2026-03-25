@@ -13,7 +13,7 @@ const StudentTransportDetails = () => {
   try {
 
    const response = await axios.get(
-    "http://localhost:7000/viewallstudenttransport",{
+    `${import.meta.env.VITE_API_BASE_URL}/viewallstudenttransport`,{
       headers: {
         Authorization: `Bearer ${Cookies.get("emtoken")}`,
       },

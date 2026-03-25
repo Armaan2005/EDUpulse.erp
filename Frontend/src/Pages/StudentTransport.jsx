@@ -32,7 +32,7 @@ const StudentTransportDashboard = () => {
 
         const fetchAllTransportData = async () => {
             try {
-                const studentRes = await axios.get('http://localhost:7000/studenttransportview', {
+                const studentRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studenttransportview`, {
                     headers: { Authorization: `Bearer ${token}` },
                     withCredentials: true,
                 });
@@ -47,21 +47,21 @@ const StudentTransportDashboard = () => {
 
                 const routeNo = studentData.Route;
 
-                const driversRes = await axios.get('http://localhost:7000/viewdrivers', {
+                const driversRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewdrivers`, {
                     headers: { Authorization: `Bearer ${token}` },
                     withCredentials: true,
                 });
                 const driver = driversRes.data.driver.find(d => d.Route?.toString() === routeNo?.toString());
                 setDriverDetails(driver || null);
 
-                const conditionsRes = await axios.get('http://localhost:7000/conditionview', {
+                const conditionsRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/conditionview`, {
                     headers: { Authorization: `Bearer ${token}` },
                     withCredentials: true,
                 });
                 const condition = conditionsRes.data.data.find(c => c.routeNo?.toString() === routeNo?.toString());
                 setBusCondition(condition || null);
 
-                const routeRes = await axios.get(`http://localhost:7000/viewroutebyid/${encodeURIComponent(routeNo)}`, {
+                const routeRes = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewroutebyid/${encodeURIComponent(routeNo)}`, {
                     withCredentials: true,
                 });
                 setRouteDetails(routeRes.data.stops || null);

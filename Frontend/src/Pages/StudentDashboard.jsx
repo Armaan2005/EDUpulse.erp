@@ -92,7 +92,7 @@ const NoticeWidget = () => {
         const fetchNotices = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('http://localhost:7000/viewnotice', { headers: { Authorization: `Bearer ${Cookies.get('token')}` }, withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewnotice`, { headers: { Authorization: `Bearer ${Cookies.get('token')}` }, withCredentials: true });
                 setNotices(response.data.notices || []);
             } catch (err) { setError(err.response?.data?.msg || 'Failed to fetch notices.'); }
             finally { setLoading(false); }
@@ -150,7 +150,7 @@ const StudentDashboard = () => {
     useEffect(() => {
         const fetchDashboard = async () => {
             try {
-                const response = await axios.get("http://localhost:7000/studentdashboard", { headers: { "Authorization": `Bearer ${Cookies.get("token")}` }, withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studentdashboard`, { headers: { "Authorization": `Bearer ${Cookies.get("token")}` }, withCredentials: true });
                 if (response.status === 200) setName(response.data.dashboard.name);
             } catch (err) { console.error("Dashboard Error:", err.message); }
         };

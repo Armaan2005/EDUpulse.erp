@@ -7,7 +7,7 @@ import {
     FaSpinner, FaTimesCircle, FaLink, FaCalendarAlt, FaIdBadge, FaHourglassHalf 
 } from 'react-icons/fa';
 import '../CSS/viewsubmissionss.css';
-const FILE_BASE_URL = 'http://localhost:7000/uploads/'; 
+const FILE_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/uploads/`; 
 
 const ViewSubmissions = () => {
     const [submissions, setSubmissions] = useState([]);
@@ -32,7 +32,7 @@ const ViewSubmissions = () => {
         }
 
         try {
-            const response = await axios.get('http://localhost:7000/viewsubmission', {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewsubmission`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

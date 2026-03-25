@@ -1,0 +1,285 @@
+/* ============================================
+   viewattendance.css  — Staff & Student View
+   ============================================ */
+
+.va-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px 40px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.va-header {
+  margin-bottom: 24px;
+}
+.va-header h1 {
+  font-size: 1.6rem;
+  color: #3d2b5e;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 4px;
+}
+.va-subtitle {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Search Bar */
+.va-search-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e0d6f0;
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: 0 2px 8px rgba(129, 95, 155, 0.08);
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.va-date-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+.va-cal-icon { color: #815f9b; font-size: 1rem; }
+.va-date-input {
+  border: 1px solid #d0c4e8;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  color: #3d2b5e;
+  outline: none;
+  cursor: pointer;
+}
+.va-date-input:focus { border-color: #815f9b; }
+
+.va-search-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #815f9b;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.va-search-btn:hover:not(:disabled) { background: #6a4d82; }
+.va-search-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.va-spin { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Error */
+.va-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+}
+
+/* Summary Cards */
+.va-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.va-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  border-top: 4px solid transparent;
+}
+.va-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.va-card-total  { border-color: #815f9b; }
+.va-card-present{ border-color: #22c55e; }
+.va-card-half   { border-color: #f59e0b; }
+.va-card-leave  { border-color: #ef4444; }
+.va-card-num {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #3d2b5e;
+  line-height: 1;
+}
+.va-card-label {
+  display: block;
+  font-size: 0.78rem;
+  color: #888;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Attendance % bar */
+.va-pct-bar-wrapper {
+  margin-bottom: 20px;
+}
+.va-pct-label {
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+}
+.va-pct-bar {
+  height: 10px;
+  background: #f0ebf8;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.va-pct-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s ease;
+}
+
+/* Controls row */
+.va-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Filter Tabs */
+.va-filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.va-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f5f0fb;
+  border: 1px solid #e0d6f0;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.va-tab:hover { background: #ede5f7; }
+.va-tab-active { background: #815f9b; color: #fff; border-color: #815f9b; }
+.va-tab-count {
+  background: rgba(255,255,255,0.3);
+  border-radius: 99px;
+  padding: 1px 7px;
+  font-size: 0.75rem;
+}
+.va-tab-active .va-tab-count { background: rgba(255,255,255,0.25); }
+
+/* Name search */
+.va-name-search {
+  border: 1px solid #d0c4e8;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.88rem;
+  outline: none;
+  min-width: 200px;
+}
+.va-name-search:focus { border-color: #815f9b; }
+
+/* Table */
+.va-table-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.va-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.va-table thead tr {
+  background: #f5f0fb;
+}
+.va-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #3d2b5e;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid #e0d6f0;
+}
+.va-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0ebf8;
+  color: #444;
+}
+.va-row:last-child td { border-bottom: none; }
+.va-row:hover { background: #faf7fd; }
+.va-row-leave { opacity: 0.75; }
+
+.va-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  color: #3d2b5e;
+}
+.va-id { color: #888; font-size: 0.85rem; }
+
+/* Status Icons */
+.va-icon { font-size: 1rem; }
+.va-present { color: #22c55e; }
+.va-half    { color: #f59e0b; }
+.va-leave   { color: #ef4444; }
+
+/* Badges */
+.va-badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.va-badge-present { background: #dcfce7; color: #166534; }
+.va-badge-half    { background: #fef9c3; color: #854d0e; }
+.va-badge-leave   { background: #fee2e2; color: #991b1b; }
+
+/* Marked */
+.va-marked { font-size: 0.82rem; font-weight: 600; }
+.va-marked.yes { color: #22c55e; }
+.va-marked.no  { color: #ef4444; }
+
+/* Empty state */
+.va-empty {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .va-summary { grid-template-columns: repeat(2, 1fr); }
+  .va-search-bar { flex-direction: column; align-items: stretch; }
+  .va-search-btn { justify-content: center; }
+  .va-controls { flex-direction: column; align-items: stretch; }
+  .va-name-search { width: 100%; }
+}

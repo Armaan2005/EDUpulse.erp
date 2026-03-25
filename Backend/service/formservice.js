@@ -18,7 +18,11 @@ const formatQuestions = (questions) => {
 };
 
 exports.addquestion = async (req, res) => {
-    const { title, questions } = req.body;
+    staff=req.staff;
+    if (!staff) {
+        return res.status(401).json({ success: false, msg: 'Unauthorized' });
+    }
+    const { title, questions , startTime, endTime } = req.body;
 
     try {
         let quiz = await Quiz.findOne({ title });
@@ -26,7 +30,9 @@ exports.addquestion = async (req, res) => {
         if (!quiz) {
             quiz = new Quiz({
                 title,
-                questions: formatQuestions(questions)
+                questions: formatQuestions(questions),
+                startTime,
+                endTime
             });
         } else {
             quiz.questions = [...quiz.questions, ...formatQuestions(questions)];
@@ -52,9 +58,9 @@ exports.addquestion = async (req, res) => {
 
 exports.viewTitle = async (req, res) => {
     try {
-        const quizzes = await test.find().select('title');
-        const titles = quizzes.map(quiz => quiz.title);
-        return res.status(200).json({ success: true, titles });
+        const quizzes = await test.find().select('title startTime endTime');
+        
+        return res.status(200).json({ success: true, titles: quizzes });
     } catch (error) {
         return res.status(500).json({ success: false, msg: 'Server error' });
     }

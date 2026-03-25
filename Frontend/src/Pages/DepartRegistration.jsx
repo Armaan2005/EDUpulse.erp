@@ -10,7 +10,7 @@ import {
   FaSpinner
 } from "react-icons/fa";
 
-const BASE_URL = "http://localhost:7000";
+const BASE_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
 const DeptRegistration = () => {
 

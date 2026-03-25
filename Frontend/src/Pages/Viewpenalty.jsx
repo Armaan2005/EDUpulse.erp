@@ -11,7 +11,7 @@ const Viewpenalty = () => {
    const fetchPenalties = async () => {
     try {
       const token = Cookies.get('emtoken');
-      const response = await axios.get('http://localhost:7000/viewallpenalty', {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewallpenalty`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -26,7 +26,7 @@ const Viewpenalty = () => {
    const handleRemind = async (studentId, amount) => {
     try {
       const token = Cookies.get('emtoken');
-      await axios.post('http://localhost:7000/penaltyreminder', {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/penaltyreminder`, {
         studentId,
         amount
       }, {

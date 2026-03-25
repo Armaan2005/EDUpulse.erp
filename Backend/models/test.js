@@ -3,6 +3,8 @@ const mongo = require('mongoose');
 const Quiz = new mongo.Schema({
   title: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }, 
+  startTime: { type: Date },
+  endTime: { type: Date },
   questions: [
     {
       questionId: { type: Number, required: true },

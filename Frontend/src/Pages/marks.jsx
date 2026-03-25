@@ -24,8 +24,8 @@ const ExamMarksRegistration = () => {
     const fetch = async () => {
       try {
         const [depRes, stuRes] = await Promise.all([
-          axios.get('http://localhost:7000/viewdepartment', { withCredentials: true }),
-          axios.get('http://localhost:7000/viewstudent', { withCredentials: true }),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewdepartment`, { withCredentials: true }),
+          axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewstudent`, { withCredentials: true }),
         ]);
 
         const deptData = depRes.data?.dept || depRes.data?.departments || [];
@@ -79,7 +79,7 @@ const ExamMarksRegistration = () => {
 
     setLoading(true);
     try {
-      await axios.post('http://localhost:7000' + url, { studentId, ...marks }, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}` + url, { studentId, ...marks }, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
       setMarks({ subject1: '', subject2: '', subject3: '', subject4: '', subject5: '', subject6: '' });
       setStudentId('');
       setExamType('');

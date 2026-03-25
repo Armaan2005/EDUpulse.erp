@@ -86,7 +86,7 @@ function AddRoutes() {
   try {
 
    const response = await axios.post(
-    "http://localhost:7000/addroute",
+    `${import.meta.env.VITE_API_BASE_URL}/addroute`,
     formData,
     {
      headers: {

@@ -11,7 +11,7 @@ const Paypenalty = () => {
     try {
       setLoading(true);
       const token = Cookies.get('token');
-      const response = await axios.get('http://localhost:7000/viewpenalty', {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewpenalty`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -28,7 +28,7 @@ const Paypenalty = () => {
   const handlePay = async (penaltyId) => {
     try {
       const token = Cookies.get('token');
-      await axios.post(`http://localhost:7000/paypenalty`, {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/paypenalty`, {
         penaltyId: penaltyId
       }, {
         headers: {

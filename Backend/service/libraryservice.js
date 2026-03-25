@@ -4,12 +4,15 @@ let data = require("../models/da");
 let penalty = require("../models/penalty");
 let stu=require("../models/admission");
 let nodemailer = require('nodemailer');
+const MAIL_USER = process.env.MAIL_USER;
+const MAIL_PASS = process.env.MAIL_PASS;
+const MAIL_FROM = process.env.MAIL_FROM;
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth:{
-        user: "edupulse.erp@gmail.com",
-        pass : "hupa ygfd bswi kgez"
+        user: MAIL_USER,
+        pass: MAIL_PASS
     }
 });
 
@@ -303,7 +306,7 @@ exports.penaltyreminder = async (req, res) =>
         let amount=req.body.amount;
 
         let mail = {
-            from: 'edupulse.erp@gmail.com',
+            from: MAIL_FROM,
             to: email,
             subject: 'Library Penalty Reminder',
             text: `Dear ${student.name},\n\nThis is a reminder that you have an outstanding library penalty of ₹${amount}. Please make the payment at your earliest convenience to avoid further penalties.\n\nThank you,\nEduPulse Library`

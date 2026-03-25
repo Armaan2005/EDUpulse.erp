@@ -29,7 +29,7 @@ const AssignmentSubmission = () => {
         }
 
         try {
-            const response = await axios.get(`http://localhost:7000/studentprofile`, 
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studentprofile`, 
                 {
                     headers: {
                         Authorization: `Bearer ${token}`, 
@@ -87,7 +87,7 @@ const AssignmentSubmission = () => {
         formData.append('submissionFile', pdfFile);
 
         try {
-            const response = await axios.post('http://localhost:7000/submission', formData, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/submission`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -49,17 +49,17 @@ const UT2ReportCard = () => {
             };
 
             try {
-                const profileResponse = await axios.get('http://localhost:7000/studentprofile', config); 
+                const profileResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studentprofile`, config); 
                 const studentProfile = profileResponse.data.students || profileResponse.data.student; 
                 if (!studentProfile) throw new Error("Student profile data missing.");
                 setProfile(studentProfile);
                 
                 const studentDept = studentProfile.department;
 
-                const subjectsResponse = await axios.get('http://localhost:7000/viewsubjects', config); 
+                const subjectsResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewsubjects`, config); 
                 const subjectEntry = subjectsResponse.data.subject.find(sub => sub.branch === studentDept);
                 if (!subjectEntry) throw new Error("Subjects not found for this department.");
-                const ut1Response = await axios.get('http://localhost:7000/getunittest2', config); 
+                const ut1Response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/getunittest2`, config); 
                 const ut1MarksObject = ut1Response.data.data || {}; 
                 const finalData = processReportData(subjectEntry, ut1MarksObject);
                 

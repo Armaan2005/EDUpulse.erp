@@ -77,13 +77,13 @@ const FinalReportCard = () => {
             };
 
             try {
-                const profileResponse = await axios.get('http://localhost:7000/studentprofile', config);
+                const profileResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/studentprofile`, config);
                 const studentProfile = profileResponse.data.students || profileResponse.data.student;
                 if (!studentProfile) throw new Error("Student profile data missing.");
                 setProfile(studentProfile);
                 const studentDept = studentProfile.department;
 
-                const subjectsResponse = await axios.get('http://localhost:7000/viewsubjects', config);
+                const subjectsResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewsubjects`, config);
                 const subjectEntry = subjectsResponse.data.subject.find(sub => sub.branch === studentDept);
                 
                 if (!subjectEntry) {
@@ -95,10 +95,10 @@ const FinalReportCard = () => {
                 }
 
                 const [ut1Res, midTermRes, ut2Res, finalRes] = await Promise.all([
-                    axios.get('http://localhost:7000/getunittest1', config),
-                    axios.get('http://localhost:7000/getmidTerm', config),
-                    axios.get('http://localhost:7000/getunittest2', config),
-                    axios.get('http://localhost:7000/getfinal', config)
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/getunittest1`, config),
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/getmidTerm`, config),
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/getunittest2`, config),
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/getfinal`, config)
                 ]);
 
                 const finalData = processReportData(

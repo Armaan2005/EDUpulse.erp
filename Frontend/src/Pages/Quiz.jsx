@@ -16,19 +16,17 @@ const QuizDetails = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Get auth token
   useEffect(() => {
     const Token = Cookies.get('token');
     if (Token) setToken(Token);
     else setError('Authentication token missing. Please log in.');
   }, []);
 
-  // Fetch quiz data
   useEffect(() => {
     const fetchQuizDetails = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:7000/viewAssessment/${title}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewAssessment/${title}`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -68,7 +66,7 @@ const QuizDetails = () => {
     }
 
     try {
-      await axios.post('http://localhost:7000/AssessmentSubmission', {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/AssessmentSubmission`, {
         quizTitle: quiz.title,
         answers,
       }, {

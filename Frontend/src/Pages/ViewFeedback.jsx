@@ -15,7 +15,7 @@ const ViewFeedback = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const res = await axios.get("http://localhost:7000/viewfeedback",{
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/viewfeedback`,{
             headers: {
               Authorization: `Bearer ${Cookies.get("emtoken")}`,
             },
