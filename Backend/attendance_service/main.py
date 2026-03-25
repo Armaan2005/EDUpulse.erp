@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-COLLEGE_LOCATION = (27.631249, 76.656451)  # ← apna college ka lat/lon daalo
+COLLEGE_LOCATION = (27.544702911752125,76.60339883723219)  # ← apna college ka lat/lon daalo
 RADIUS = 200  # meters
 
 @app.post("/face/register/")

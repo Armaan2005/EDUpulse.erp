@@ -77,13 +77,24 @@ export default function FaceAttendance() {
     });
 
   const getLocation = () =>
-    new Promise((resolve, reject) =>
-      navigator.geolocation.getCurrentPosition(
-        (pos) => resolve(pos.coords),
-        (err) => reject(err),
-        { enableHighAccuracy: true }
-      )
-    );
+  new Promise((resolve, reject) =>
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        console.log("Latitude:", pos.coords.latitude);
+        console.log("Longitude:", pos.coords.longitude);
+        console.log("Accuracy (meters):", pos.coords.accuracy);
+
+        resolve(pos.coords);
+      },
+      (err) => reject(err),
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    )
+  );
+
 
   const handleMarkAttendance = async () => {
     setStep('processing');
