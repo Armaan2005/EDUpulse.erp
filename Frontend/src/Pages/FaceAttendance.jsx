@@ -38,8 +38,13 @@ export default function FaceAttendance() {
     try {
       const res = await axios.get(`${API}/face-attendance/history`, { withCredentials: true });
       if (res.data.success) {
-        setHistory(res.data.records || []);
-        setTotalDays(res.data.total || 0);
+        const sorted = [...(res.data.records || [])].sort((a, b) => {
+          const ta = new Date(a.timestamp || 0).getTime();
+          const tb = new Date(b.timestamp || 0).getTime();
+          return tb - ta;
+        });
+        setHistory(sorted);
+        setTotalDays(sorted.length || 0);
       }
     } catch (err) {
       console.log('History fetch error:', err.message);
@@ -281,7 +286,9 @@ export default function FaceAttendance() {
               background: `linear-gradient(135deg, ${secondaryColor}, #0a5a8a)`, color: 'white',
             }}>
               <Typography variant="h4" fontWeight="bold">
-                {history.length > 0 ? history[0].date?.slice(5) : '—'}
+                {history.length > 0 && history[0].timestamp
+                  ? new Date(history[0].timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit' })
+                  : '—'}
               </Typography>
               <Typography variant="caption">Last Attended</Typography>
             </Paper>
@@ -313,9 +320,15 @@ export default function FaceAttendance() {
                   <TableBody>
                     {history.map((r, i) => (
                       <TableRow key={i} hover>
-                        <TableCell>{r.date}</TableCell>
                         <TableCell>
-                          {r.timestamp ? r.timestamp.split('T')[1]?.slice(0, 5) : '—'}
+                          {r.timestamp
+                            ? new Date(r.timestamp).toLocaleDateString('en-GB')
+                            : (r.date || '—')}
+                        </TableCell>
+                        <TableCell>
+                          {r.timestamp
+                            ? new Date(r.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false })
+                            : '—'}
                         </TableCell>
                         <TableCell>
                           <Chip
